@@ -12,6 +12,8 @@ import HomePage from "./pages/HomePage";
 import Persona from "./components/Persona";
 import UploadPhoto from "./components/Upload";
 
+import { Photo } from "./types";
+
 function App() {
   const [currentSort, setCurrentSort] = useState("date");
   const [currentFilter, setCurrentFilter] = useState("");
@@ -19,9 +21,14 @@ function App() {
   const [loginToken, setLoginToken] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
   const [comments, setComments] = useState(initialComments);
+  const [userPhotos, setUserPhotos] = useState<Photo[]>([]);
 
   useEffect(() => {
-    const token = localStorage.getItem('loginToken');
+    setUserPhotos(samplePhotos);
+  }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("loginToken");
     if (token) {
       setLoginToken(token);
     }
@@ -78,13 +85,16 @@ function App() {
             />
           }
         />
-        <Route path="/upload" element={<UploadPhoto />} />
+        <Route
+          path="/upload"
+          element={<UploadPhoto setUserPhotos={setUserPhotos} />}
+        />
         <Route path="/persona" element={<Persona />} />
         <Route
           path="/gallery"
           element={
             <Gallery
-              photos={samplePhotos}
+              photos={userPhotos}
               onSelectPhoto={handleSelectPhoto}
               onBack={() => window.history.back()}
             />

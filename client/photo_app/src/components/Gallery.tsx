@@ -1,21 +1,7 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Gallery.css';
-
-interface Metadata {
-  name: string;
-  camera: string;
-  lens: string; 
-  iso: string;
-  shutter: string;
-  aperture: string;
-}
-
-interface Photo {
-  id: number;
-  url: string;
-  metadata: Metadata;
-}
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Photo } from "../types";
+import "./Gallery.css";
 
 interface GalleryProps {
   photos: Photo[];
@@ -27,13 +13,13 @@ const Gallery: React.FC<GalleryProps> = ({ photos, onSelectPhoto }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const btn = document.getElementById('toggle-dark-mode');
+    const btn = document.getElementById("toggle-dark-mode");
     const toggle = () => {
-      document.body.classList.toggle('dark');
+      document.body.classList.toggle("dark");
     };
-    btn?.addEventListener('click', toggle);
+    btn?.addEventListener("click", toggle);
     return () => {
-      btn?.removeEventListener('click', toggle);
+      btn?.removeEventListener("click", toggle);
     };
   }, []);
 
@@ -42,14 +28,22 @@ const Gallery: React.FC<GalleryProps> = ({ photos, onSelectPhoto }) => {
       <header className="gallery-header">
         <button
           className="gallery-home-btn"
-          onClick={() => navigate('/')}
+          onClick={() => navigate("/")}
           aria-label="Go to Home"
         >
           {/* Same icon as Persona */}
-          <span role="img" aria-label="Home">🏠</span>
+          <span role="img" aria-label="Home">
+            🏠
+          </span>
         </button>
         <h1>ProCamShare - Gallery</h1>
-        <button id="toggle-dark-mode" aria-label="Toggle dark mode" className="toggle-dark-btn">🌙</button>
+        <button
+          id="toggle-dark-mode"
+          aria-label="Toggle dark mode"
+          className="toggle-dark-btn"
+        >
+          🌙
+        </button>
       </header>
       <div className="gallery-page">
         <div className="gallery-grid">
@@ -62,9 +56,10 @@ const Gallery: React.FC<GalleryProps> = ({ photos, onSelectPhoto }) => {
                 tabIndex={0}
                 role="button"
                 aria-label={`View details for ${photo.metadata.name}`}
-                style={{ cursor: 'pointer' }}
-                onKeyPress={e => {
-                  if (e.key === 'Enter' || e.key === ' ') onSelectPhoto(photo.id);
+                style={{ cursor: "pointer" }}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter" || e.key === " ")
+                    onSelectPhoto(photo.id);
                 }}
               >
                 <div className="gallery-img-wrapper">
@@ -93,7 +88,8 @@ const Gallery: React.FC<GalleryProps> = ({ photos, onSelectPhoto }) => {
       </div>
       <footer>
         <p>
-          Made with ❤️ for photographers. &copy; 2025 ProCamShare / Code Chrysalis
+          Made with ❤️ for photographers. &copy; 2025 ProCamShare / Code
+          Chrysalis
         </p>
       </footer>
     </div>
