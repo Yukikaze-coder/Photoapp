@@ -11,6 +11,7 @@ import Gallery from "./components/Gallery";
 import HomePage from "./pages/HomePage";
 import Persona from "./components/Persona";
 import UploadPhoto from "./components/Upload";
+import ViewSortPhotos from "./components/ViewSortPhotos";
 
 import { Photo } from "./types";
 
@@ -107,7 +108,11 @@ function App() {
             <CommentPage comments={comments} onAddComment={handleAddComment} />
           }
         />
+        <Route path="/view-sort-photos" element={<ViewSortPhotos photos={userPhotos} />} />
       </Routes>
+      <a href="/view-sort-photos" className="view-sort-link">
+        View &amp; Sort Photos
+      </a>
       <Footer />
     </Router>
   );

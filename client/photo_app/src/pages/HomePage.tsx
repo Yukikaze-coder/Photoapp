@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import Comment from "../components/Comment";
 import Toolbar from "../components/Toolbar";
@@ -87,10 +87,12 @@ export default function HomePage(props: HomePageProps) {
             <h3>🔍 Manage Gallery</h3>
             <p>Edit, update, or delete your uploads.</p>
           </div>
-          <div className="feature">
-            <h3>View & Sort Photos</h3>
-            <p>Dynamic gallery with filters and sorting.</p>
-          </div>
+          <Link to="/view-sort-photos" style={{ textDecoration: "none" }}>
+            <div className="feature">
+              <h3>View &amp; Sort Photos</h3>
+              <p>Dynamic gallery with filters and sorting.</p>
+            </div>
+          </Link>
           <div className="feature">
             <h3>Device Library</h3>
             <p>Explore and link devices to your photos.</p>

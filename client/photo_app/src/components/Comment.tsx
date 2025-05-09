@@ -10,13 +10,20 @@ interface Comment {
   timestamp: string;
 }
 
+interface Photo {
+  id: number;
+  url: string;
+  title?: string;
+}
+
 interface CommentProps {
   photoId: number;
   comments: Comment[];
   onAddComment: (photoId: number, comment: Omit<Comment, 'id' | 'timestamp'>) => void;
   standalone?: boolean; // If true, render the full comment UI
-  // Removed unused darkMode prop
   handleToggleDarkMode?: () => void; // Add this for the button
+  photos?: Photo[];
+  onSelectPhoto?: (photoId: number) => void;
 }
 
 const CommentSection: React.FC<CommentProps> = ({
@@ -24,8 +31,9 @@ const CommentSection: React.FC<CommentProps> = ({
   comments,
   onAddComment,
   standalone = false,
-  // Removed unused darkMode default value
   handleToggleDarkMode,
+  photos,
+  onSelectPhoto,
 }) => {
   const navigate = useNavigate();
   const [author, setAuthor] = React.useState('');
@@ -56,6 +64,9 @@ const CommentSection: React.FC<CommentProps> = ({
     outline: standalone ? 'none' : undefined,
     userSelect: 'none'
   };
+
+  // Show selector if photos are provided and onSelectPhoto exists
+  // Removed unused renderPhotoSelector function
 
   if (!standalone) {
     // The whole box acts as a button that navigates to the comment page
@@ -145,6 +156,23 @@ const CommentSection: React.FC<CommentProps> = ({
         )}
       </div>
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        {/* Move photo selector here */}
+        {photos && photos.length > 0 && onSelectPhoto && (
+          <select
+            id="photo-select"
+            value={photoId}
+            onChange={e => onSelectPhoto(Number(e.target.value))}
+            style={{ padding: '0.75rem 1rem', borderRadius: 8, border: '1px solid #ccc', fontSize: '1rem' }}
+            required
+          >
+            <option value="" disabled>Select Photo</option>
+            {photos.map(photo => (
+              <option key={photo.id} value={photo.id}>
+                {photo.title || `Photo #${photo.id}`}
+              </option>
+            ))}
+          </select>
+        )}
         <input
           type="text"
           placeholder="Your name"
